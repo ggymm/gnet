@@ -18,8 +18,8 @@ package elastic
 import (
 	"io"
 
-	"github.com/panjf2000/gnet/v2/pkg/buffer/ring"
-	rbPool "github.com/panjf2000/gnet/v2/pkg/pool/ringbuffer"
+	"github.com/ggymm/gnet/pkg/buffer/ring"
+	rbPool "github.com/ggymm/gnet/pkg/pool/ringbuffer"
 )
 
 // RingBuffer is the elastic wrapper of ring.Buffer.

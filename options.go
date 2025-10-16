@@ -17,7 +17,7 @@ package gnet
 import (
 	"time"
 
-	"github.com/panjf2000/gnet/v2/pkg/logging"
+	"github.com/ggymm/gnet/pkg/logging"
 )
 
 // Option is a function that will set up option.

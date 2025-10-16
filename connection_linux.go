@@ -22,7 +22,7 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"github.com/panjf2000/gnet/v2/pkg/netpoll"
+	"github.com/ggymm/gnet/pkg/netpoll"
 )
 
 func (c *conn) processIO(_ int, ev netpoll.IOEvent, _ netpoll.IOFlags) error {

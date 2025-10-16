@@ -23,8 +23,8 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"github.com/panjf2000/gnet/v2/pkg/bs"
-	bsPool "github.com/panjf2000/gnet/v2/pkg/pool/byteslice"
+	"github.com/ggymm/gnet/pkg/bs"
+	bsPool "github.com/ggymm/gnet/pkg/pool/byteslice"
 )
 
 // NetAddrToSockaddr converts a net.Addr to a Sockaddr.

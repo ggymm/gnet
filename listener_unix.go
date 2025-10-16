@@ -23,12 +23,9 @@ import (
 	"strings"
 	"sync"
 
-	"golang.org/x/sys/unix"
-
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
-	"github.com/panjf2000/gnet/v2/pkg/netpoll"
-	"github.com/panjf2000/gnet/v2/pkg/socket"
+	errorx "github.com/ggymm/gnet/pkg/errors"
+	"github.com/ggymm/gnet/pkg/netpoll"
+	"github.com/ggymm/gnet/pkg/socket"
 )
 
 type listener struct {
@@ -71,10 +68,10 @@ func (ln *listener) close() {
 	ln.once.Do(
 		func() {
 			if ln.fd > 0 {
-				logging.Error(os.NewSyscallError("close", unix.Close(ln.fd)))
+				// logging.Error(os.NewSyscallError("close", unix.Close(ln.fd)))
 			}
 			if ln.network == "unix" {
-				logging.Error(os.RemoveAll(ln.address))
+				// logging.Error(os.RemoveAll(ln.address))
 			}
 		})
 }

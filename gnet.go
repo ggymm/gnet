@@ -29,11 +29,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/panjf2000/gnet/v2/internal/gfd"
-	"github.com/panjf2000/gnet/v2/pkg/buffer/ring"
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
-	"github.com/panjf2000/gnet/v2/pkg/math"
+	"github.com/ggymm/gnet/internal/gfd"
+	"github.com/ggymm/gnet/pkg/buffer/ring"
+	errorx "github.com/ggymm/gnet/pkg/errors"
+	"github.com/ggymm/gnet/pkg/math"
 )
 
 // Action is an action that occurs after the completion of an event.
@@ -547,25 +546,25 @@ var MaxStreamBufferCap = 64 * 1024 // 64KB
 func createListeners(addrs []string, opts ...Option) ([]*listener, *Options, error) {
 	options := loadOptions(opts...)
 
-	logger, logFlusher := logging.GetDefaultLogger(), logging.GetDefaultFlusher()
-	if options.Logger == nil {
-		if options.LogPath != "" {
-			logger, logFlusher, _ = logging.CreateLoggerAsLocalFile(options.LogPath, options.LogLevel)
-		}
-		options.Logger = logger
-	} else {
-		logger = options.Logger
-		logFlusher = nil
-	}
-	logging.SetDefaultLoggerAndFlusher(logger, logFlusher)
-
-	logging.Debugf("default logging level is %s", logging.LogLevel())
+	// logger, logFlusher := logging.GetDefaultLogger(), logging.GetDefaultFlusher()
+	// if options.Logger == nil {
+	// 	if options.LogPath != "" {
+	// 		logger, logFlusher, _ = logging.CreateLoggerAsLocalFile(options.LogPath, options.LogLevel)
+	// 	}
+	// 	options.Logger = logger
+	// } else {
+	// 	logger = options.Logger
+	// 	logFlusher = nil
+	// }
+	// logging.SetDefaultLoggerAndFlusher(logger, logFlusher)
+	//
+	// logging.Debugf("default logging level is %s", logging.LogLevel())
 
 	// The maximum number of operating system threads that the Go program can use is initially set to 10000,
 	// which should also be the maximum number of I/O event-loops locked to OS threads that users can start up.
 	if options.LockOSThread && options.NumEventLoop > 10000 {
-		logging.Errorf("too many event-loops under LockOSThread mode, should be less than 10,000 "+
-			"while you are trying to set up %d\n", options.NumEventLoop)
+		// logging.Errorf("too many event-loops under LockOSThread mode, should be less than 10,000 "+
+		// 	"while you are trying to set up %d\n", options.NumEventLoop)
 		return nil, nil, errorx.ErrTooManyEventLoopThreads
 	}
 
@@ -684,7 +683,7 @@ func Run(eventHandler EventHandler, protoAddr string, opts ...Option) error {
 		for _, ln := range listeners {
 			ln.close()
 		}
-		logging.Cleanup()
+		// logging.Cleanup()
 	}()
 	return run(eventHandler, listeners, options, []string{protoAddr})
 }
@@ -699,7 +698,7 @@ func Rotate(eventHandler EventHandler, addrs []string, opts ...Option) error {
 		for _, ln := range listeners {
 			ln.close()
 		}
-		logging.Cleanup()
+		// logging.Cleanup()
 	}()
 	return run(eventHandler, listeners, options, addrs)
 }

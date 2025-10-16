@@ -30,13 +30,13 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	gio "github.com/panjf2000/gnet/v2/pkg/io"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
-	"github.com/panjf2000/gnet/v2/pkg/netpoll"
-	"github.com/panjf2000/gnet/v2/pkg/pool/goroutine"
-	"github.com/panjf2000/gnet/v2/pkg/queue"
-	"github.com/panjf2000/gnet/v2/pkg/socket"
+	errorx "github.com/ggymm/gnet/pkg/errors"
+	gio "github.com/ggymm/gnet/pkg/io"
+	"github.com/ggymm/gnet/pkg/logging"
+	"github.com/ggymm/gnet/pkg/netpoll"
+	"github.com/ggymm/gnet/pkg/pool/goroutine"
+	"github.com/ggymm/gnet/pkg/queue"
+	"github.com/ggymm/gnet/pkg/socket"
 )
 
 type eventloop struct {

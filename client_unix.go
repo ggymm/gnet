@@ -26,13 +26,12 @@ import (
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/sys/unix"
 
-	"github.com/panjf2000/gnet/v2/pkg/buffer/ring"
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
-	"github.com/panjf2000/gnet/v2/pkg/math"
-	"github.com/panjf2000/gnet/v2/pkg/netpoll"
-	"github.com/panjf2000/gnet/v2/pkg/queue"
-	"github.com/panjf2000/gnet/v2/pkg/socket"
+	"github.com/ggymm/gnet/pkg/buffer/ring"
+	errorx "github.com/ggymm/gnet/pkg/errors"
+	"github.com/ggymm/gnet/pkg/math"
+	"github.com/ggymm/gnet/pkg/netpoll"
+	"github.com/ggymm/gnet/pkg/queue"
+	"github.com/ggymm/gnet/pkg/socket"
 )
 
 // Client of gnet.
@@ -47,17 +46,17 @@ func NewClient(eh EventHandler, opts ...Option) (cli *Client, err error) {
 	cli = new(Client)
 	cli.opts = options
 
-	logger, logFlusher := logging.GetDefaultLogger(), logging.GetDefaultFlusher()
-	if options.Logger == nil {
-		if options.LogPath != "" {
-			logger, logFlusher, _ = logging.CreateLoggerAsLocalFile(options.LogPath, options.LogLevel)
-		}
-		options.Logger = logger
-	} else {
-		logger = options.Logger
-		logFlusher = nil
-	}
-	logging.SetDefaultLoggerAndFlusher(logger, logFlusher)
+	// logger, logFlusher := logging.GetDefaultLogger(), logging.GetDefaultFlusher()
+	// if options.Logger == nil {
+	// 	if options.LogPath != "" {
+	// 		logger, logFlusher, _ = logging.CreateLoggerAsLocalFile(options.LogPath, options.LogLevel)
+	// 	}
+	// 	options.Logger = logger
+	// } else {
+	// 	logger = options.Logger
+	// 	logFlusher = nil
+	// }
+	// logging.SetDefaultLoggerAndFlusher(logger, logFlusher)
 
 	rootCtx, shutdown := context.WithCancel(context.Background())
 	eg, ctx := errgroup.WithContext(rootCtx)
@@ -105,7 +104,7 @@ func NewClient(eh EventHandler, opts ...Option) (cli *Client, err error) {
 // Start starts the client event-loop, handing IO events.
 func (cli *Client) Start() error {
 	numEventLoop := determineEventLoops(cli.opts)
-	logging.Infof("Starting gnet client with %d event loops", numEventLoop)
+	// logging.Infof("Starting gnet client with %d event loops", numEventLoop)
 
 	cli.eng.eventHandler.OnBoot(Engine{cli.eng})
 
@@ -144,7 +143,7 @@ func (cli *Client) Start() error {
 		})
 	}
 
-	logging.Debugf("default logging level is %s", logging.LogLevel())
+	// logging.Debugf("default logging level is %s", logging.LogLevel())
 
 	return nil
 }
@@ -156,11 +155,11 @@ func (cli *Client) Stop() error {
 	cli.eng.eventHandler.OnShutdown(Engine{cli.eng})
 
 	// Notify all event-loops to exit.
-	cli.eng.eventLoops.iterate(func(_ int, el *eventloop) bool {
-		logging.Error(el.poller.Trigger(queue.HighPriority,
-			func(_ any) error { return errorx.ErrEngineShutdown }, nil))
-		return true
-	})
+	// cli.eng.eventLoops.iterate(func(_ int, el *eventloop) bool {
+	// 	logging.Error(el.poller.Trigger(queue.HighPriority,
+	// 		func(_ any) error { return errorx.ErrEngineShutdown }, nil))
+	// 	return true
+	// })
 
 	// Wait for all event-loops to exit.
 	err := cli.eng.concurrency.Wait()
@@ -171,7 +170,7 @@ func (cli *Client) Stop() error {
 	cli.eng.inShutdown.Store(true)
 
 	// Flush the logger.
-	logging.Cleanup()
+	// logging.Cleanup()
 
 	return err
 }

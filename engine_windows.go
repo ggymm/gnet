@@ -17,13 +17,11 @@ package gnet
 import (
 	"context"
 	"errors"
-	"strings"
 	"sync/atomic"
 
 	"golang.org/x/sync/errgroup"
 
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
+	errorx "github.com/ggymm/gnet/pkg/errors"
 )
 
 type engine struct {
@@ -119,8 +117,8 @@ func (eng *engine) stop(ctx context.Context, engine Engine) {
 
 func run(eventHandler EventHandler, listeners []*listener, options *Options, addrs []string) error {
 	numEventLoop := determineEventLoops(options)
-	logging.Infof("Launching gnet with %d event-loops, listening on: %s",
-		numEventLoop, strings.Join(addrs, " | "))
+	// logging.Infof("Launching gnet with %d event-loops, listening on: %s",
+	// 	numEventLoop, strings.Join(addrs, " | "))
 
 	rootCtx, shutdown := context.WithCancel(context.Background())
 	eg, ctx := errgroup.WithContext(rootCtx)

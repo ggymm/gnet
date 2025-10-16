@@ -19,17 +19,15 @@ package gnet
 import (
 	"context"
 	"errors"
-	"strings"
 	"sync/atomic"
 	"time"
 
 	"golang.org/x/sync/errgroup"
 
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
-	"github.com/panjf2000/gnet/v2/pkg/netpoll"
-	"github.com/panjf2000/gnet/v2/pkg/queue"
-	"github.com/panjf2000/gnet/v2/pkg/socket"
+	errorx "github.com/ggymm/gnet/pkg/errors"
+	"github.com/ggymm/gnet/pkg/netpoll"
+	"github.com/ggymm/gnet/pkg/queue"
+	"github.com/ggymm/gnet/pkg/socket"
 )
 
 type engine struct {
@@ -229,8 +227,8 @@ func (eng *engine) stop(ctx context.Context, s Engine) {
 
 func run(eventHandler EventHandler, listeners []*listener, options *Options, addrs []string) error {
 	numEventLoop := determineEventLoops(options)
-	logging.Infof("Launching gnet with %d event-loops, listening on: %s",
-		numEventLoop, strings.Join(addrs, " | "))
+	// logging.Infof("Launching gnet with %d event-loops, listening on: %s",
+	// 	numEventLoop, strings.Join(addrs, " | "))
 
 	lns := make(map[int]*listener, len(listeners))
 	for _, ln := range listeners {

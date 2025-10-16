@@ -24,8 +24,7 @@ import (
 
 	"golang.org/x/sys/windows"
 
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
+	errorx "github.com/ggymm/gnet/pkg/errors"
 )
 
 type listener struct {
@@ -86,10 +85,10 @@ func (l *listener) dup() (int, error) {
 func (l *listener) close() {
 	l.once.Do(func() {
 		if l.pc != nil {
-			logging.Error(os.NewSyscallError("close", l.pc.Close()))
+			// logging.Error(os.NewSyscallError("close", l.pc.Close()))
 			return
 		}
-		logging.Error(os.NewSyscallError("close", l.ln.Close()))
+		// logging.Error(os.NewSyscallError("close", l.ln.Close()))
 	})
 }
 

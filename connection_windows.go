@@ -24,11 +24,11 @@ import (
 
 	"golang.org/x/sys/windows"
 
-	"github.com/panjf2000/gnet/v2/pkg/buffer/elastic"
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	bbPool "github.com/panjf2000/gnet/v2/pkg/pool/bytebuffer"
-	bsPool "github.com/panjf2000/gnet/v2/pkg/pool/byteslice"
-	"github.com/panjf2000/gnet/v2/pkg/pool/goroutine"
+	"github.com/ggymm/gnet/pkg/buffer/elastic"
+	errorx "github.com/ggymm/gnet/pkg/errors"
+	bbPool "github.com/ggymm/gnet/pkg/pool/bytebuffer"
+	bsPool "github.com/ggymm/gnet/pkg/pool/byteslice"
+	"github.com/ggymm/gnet/pkg/pool/goroutine"
 )
 
 type netErr struct {

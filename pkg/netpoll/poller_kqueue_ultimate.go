@@ -25,9 +25,9 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
-	"github.com/panjf2000/gnet/v2/pkg/queue"
+	errorx "github.com/ggymm/gnet/pkg/errors"
+	"github.com/ggymm/gnet/pkg/logging"
+	"github.com/ggymm/gnet/pkg/queue"
 )
 
 // Poller represents a poller which is in charge of monitoring file-descriptors.
@@ -108,7 +108,7 @@ func (p *Poller) Polling() error {
 			runtime.Gosched()
 			continue
 		} else if err != nil {
-			logging.Errorf("error occurs in kqueue: %v", os.NewSyscallError("kevent wait", err))
+			// logging.Errorf("error occurs in kqueue: %v", os.NewSyscallError("kevent wait", err))
 			return err
 		}
 		tsp = &ts

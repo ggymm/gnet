@@ -18,8 +18,6 @@ package netpoll
 
 import (
 	"golang.org/x/sys/unix"
-
-	"github.com/panjf2000/gnet/v2/pkg/logging"
 )
 
 func (p *Poller) addWakeupEvent() error {
@@ -47,7 +45,7 @@ retry:
 		// to make a 100% commitment.
 		goto retry
 	}
-	logging.Warnf("failed to wake up the poller: %v", err)
+	// logging.Warnf("failed to wake up the poller: %v", err)
 	return err
 }
 

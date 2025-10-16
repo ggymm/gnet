@@ -20,7 +20,7 @@ import (
 
 	"github.com/panjf2000/ants/v2"
 
-	"github.com/panjf2000/gnet/v2/pkg/logging"
+	"github.com/ggymm/gnet/pkg/logging"
 )
 
 const (
@@ -60,9 +60,9 @@ func Default() *Pool {
 	options := ants.Options{
 		ExpiryDuration: ExpiryDuration,
 		Nonblocking:    Nonblocking,
-		Logger:         &antsLogger{logging.GetDefaultLogger()},
+		// Logger:         &antsLogger{logging.GetDefaultLogger()},
 		PanicHandler: func(a any) {
-			logging.Errorf("goroutine pool panic: %v", a)
+			// logging.Errorf("goroutine pool panic: %v", a)
 		},
 	}
 	defaultAntsPool, _ := ants.NewPool(DefaultAntsPoolSize, ants.WithOptions(options))

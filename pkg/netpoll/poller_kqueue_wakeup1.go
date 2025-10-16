@@ -19,7 +19,7 @@ package netpoll
 import (
 	"golang.org/x/sys/unix"
 
-	"github.com/panjf2000/gnet/v2/pkg/logging"
+	"github.com/ggymm/gnet/pkg/logging"
 )
 
 // TODO(panjf2000): NetBSD didn't implement EVFILT_USER for user-established events
@@ -32,7 +32,7 @@ import (
 func (p *Poller) addWakeupEvent() error {
 	p.pipe = make([]int, 2)
 	if err := unix.Pipe2(p.pipe[:], unix.O_NONBLOCK|unix.O_CLOEXEC); err != nil {
-		logging.Fatalf("failed to create pipe for wakeup event: %v", err)
+		// logging.Fatalf("failed to create pipe for wakeup event: %v", err)
 	}
 	_, err := unix.Kevent(p.fd, []unix.Kevent_t{{
 		Ident:  uint64(p.pipe[0]),
@@ -51,7 +51,7 @@ retry:
 	if err == unix.EINTR {
 		goto retry
 	}
-	logging.Warnf("failed to write to the wakeup pipe: %v", err)
+	// logging.Warnf("failed to write to the wakeup pipe: %v", err)
 	return err
 }
 

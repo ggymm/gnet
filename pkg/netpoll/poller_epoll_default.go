@@ -26,9 +26,8 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	errorx "github.com/panjf2000/gnet/v2/pkg/errors"
-	"github.com/panjf2000/gnet/v2/pkg/logging"
-	"github.com/panjf2000/gnet/v2/pkg/queue"
+	errorx "github.com/ggymm/gnet/pkg/errors"
+	"github.com/ggymm/gnet/pkg/queue"
 )
 
 // Poller represents a poller which is in charge of monitoring file-descriptors.
@@ -124,7 +123,7 @@ func (p *Poller) Polling(callback PollEventHandler) error {
 			runtime.Gosched()
 			continue
 		} else if err != nil {
-			logging.Errorf("error occurs in epoll: %v", os.NewSyscallError("epoll_wait", err))
+			// logging.Errorf("error occurs in epoll: %v", os.NewSyscallError("epoll_wait", err))
 			return err
 		}
 		msec = 0
@@ -170,7 +169,7 @@ func (p *Poller) Polling(callback PollEventHandler) error {
 						continue
 					}
 					if err != nil {
-						logging.Errorf("failed to notify next round of event-loop for leftover tasks, %v", os.NewSyscallError("write", err))
+						// logging.Errorf("failed to notify next round of event-loop for leftover tasks, %v", os.NewSyscallError("write", err))
 					}
 					break
 				}
