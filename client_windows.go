@@ -33,18 +33,6 @@ func NewClient(eh EventHandler, opts ...Option) (cli *Client, err error) {
 	options := loadOptions(opts...)
 	cli = &Client{opts: options}
 
-	logger, logFlusher := logging.GetDefaultLogger(), logging.GetDefaultFlusher()
-	if options.Logger == nil {
-		if options.LogPath != "" {
-			logger, logFlusher, _ = logging.CreateLoggerAsLocalFile(options.LogPath, options.LogLevel)
-		}
-		options.Logger = logger
-	} else {
-		logger = options.Logger
-		logFlusher = nil
-	}
-	logging.SetDefaultLoggerAndFlusher(logger, logFlusher)
-
 	rootCtx, shutdown := context.WithCancel(context.Background())
 	eg, ctx := errgroup.WithContext(rootCtx)
 	eng := engine{
@@ -64,7 +52,6 @@ func NewClient(eh EventHandler, opts ...Option) (cli *Client, err error) {
 
 func (cli *Client) Start() error {
 	numEventLoop := determineEventLoops(cli.opts)
-	logging.Infof("Starting gnet client with %d event loops", numEventLoop)
 
 	cli.eng.eventHandler.OnBoot(Engine{cli.eng})
 
@@ -90,9 +77,6 @@ func (cli *Client) Start() error {
 			return nil
 		})
 	}
-
-	logging.Debugf("default logging level is %s", logging.LogLevel())
-
 	return nil
 }
 
@@ -109,9 +93,6 @@ func (cli *Client) Stop() error {
 
 	// Put the engine into the shutdown state.
 	cli.eng.inShutdown.Store(true)
-
-	// Flush the logger.
-	logging.Cleanup()
 
 	return err
 }
